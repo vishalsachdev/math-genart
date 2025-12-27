@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="./favicon.ico" />
+    <!-- Preload is necessary because we show these images when we disconnect from the server,
+    but at that point we cannot load these images from the server -->
+    <link rel="preload" href="./assets/gradient-yHQUC_QB.png" as="image" />
+    <link rel="preload" href="./assets/noise-60BoTA8O.png" as="image" />
+    <!-- Preload the fonts -->
+    <link rel="preload" href="./assets/Lora-VariableFont_wght-B2ootaw-.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Regular-CxL0S8W7.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Bold-D9fedIX3.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Regular-BTCkDNvf.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Medium-DU3aDxX5.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Bold-CLVRCuM9.ttf" as="font" crossorigin="anonymous" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="a marimo app" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.json" />
+
+    <script data-marimo="true">
+      function __resizeIframe(obj) {
+        var scrollbarHeight = 20; // Max between windows, mac, and linux
+
+        function setHeight() {
+          var element = obj.contentWindow.document.documentElement;
+          // If there is no vertical scrollbar, we don't need to resize the iframe
+          if (element.scrollHeight === element.clientHeight) {
+            return;
+          }
+
+          // Create a new height that includes the scrollbar height if it's visible
+          var hasHorizontalScrollbar = element.scrollWidth > element.clientWidth;
+          var newHeight = element.scrollHeight + (hasHorizontalScrollbar ? scrollbarHeight : 0);
+
+          // Only update the height if it's different from the current height
+          if (obj.style.height !== `${newHeight}px`) {
+            obj.style.height = `${newHeight}px`;
+          }
+        }
+
+        // Resize the iframe to the height of the content and bottom scrollbar height
+        setHeight();
+
+        // Resize the iframe when the content changes
+        const resizeObserver = new ResizeObserver((entries) => {
+          setHeight();
+        });
+        resizeObserver.observe(obj.contentWindow.document.body);
+      }
+    </script>
+    <marimo-filename hidden>notebook.py</marimo-filename>
+    <marimo-mode data-mode='read' hidden></marimo-mode>
+    <marimo-version data-version='0.13.4' hidden></marimo-version>
+    <marimo-user-config data-config='{"completion": {"activate_on_typing": true, "copilot": false}, "display": {"default_table_max_columns": 50, "default_width": "medium", "code_editor_font_size": 14, "dataframes": "rich", "default_table_page_size": 10, "reference_highlighting": false, "theme": "light", "cell_output": "above"}, "formatting": {"line_length": 79}, "keymap": {"preset": "default", "overrides": {}}, "runtime": {"auto_instantiate": true, "auto_reload": "off", "reactive_tests": true, "on_cell_change": "autorun", "watcher_on_save": "lazy", "output_max_bytes": 8000000, "std_stream_max_bytes": 1000000}, "save": {"autosave": "off", "autosave_delay": 1000, "format_on_save": false}, "package_management": {"manager": "pip"}, "server": {"browser": "default", "follow_symlink": false}, "language_servers": {"pylsp": {"enabled": true, "enable_mypy": true, "enable_ruff": true, "enable_flake8": false, "enable_pydocstyle": false, "enable_pylint": false, "enable_pyflakes": false}}, "snippets": {"custom_paths": [], "include_default_snippets": true}}' data-overrides='{}' hidden></marimo-user-config>
+    <marimo-app-config data-config='{"width": "medium", "app_title": "Fourier & Lissajous - Wave Visualization", "sql_output": "auto"}' hidden></marimo-app-config>
+    <marimo-server-token data-token='123' hidden></marimo-server-token>
+    <title>Fourier & Lissajous - Wave Visualization</title>
+    <script type="module" crossorigin src="./assets/index-DZa9A1hR.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-4fhpeWoJ.css">
+  <marimo-wasm hidden=""></marimo-wasm>
+    <script>
+        if (window.location.protocol === 'file:') {
+            alert('Warning: This file must be served by an HTTP server to function correctly.');
+        }
+    </script>
+    
+    <style>
+        #save-button {
+            display: none !important;
+        }
+        #filename-input {
+            display: none !important;
+        }
+    </style>
+    <marimo-code hidden="" data-show-code="false">import%20marimo%0A%0A__generated_with%20%3D%20%220.13.4%22%0Aapp%20%3D%20marimo.App(%0A%20%20%20%20width%3D%22medium%22%2C%0A%20%20%20%20app_title%3D%22Fourier%20%26%20Lissajous%20-%20Wave%20Visualization%22%2C%0A)%0A%0A%0A%40app.cell%0Adef%20_()%3A%0A%20%20%20%20import%20marimo%20as%20mo%0A%20%20%20%20return%20(mo%2C)%0A%0A%0A%40app.cell%0Adef%20_()%3A%0A%20%20%20%20import%20numpy%20as%20np%0A%20%20%20%20import%20matplotlib.pyplot%20as%20plt%0A%20%20%20%20plt.style.use('dark_background')%0A%20%20%20%20return%20np%2C%20plt%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20%23%207.%20Fourier%20Series%20%26%20Lissajous%20Curves%0A%0A%20%20%20%20%20%20%20%20%5B%E2%86%90%20Back%20to%20Index%5D(index.html)%0A%0A%20%20%20%20%20%20%20%20---%0A%0A%20%20%20%20%20%20%20%20Transform%20**waves%20into%20visual%20language**.%20Oscillating%20ribbons%20and%20spectral%20sculptures.%0A%0A%20%20%20%20%20%20%20%20%23%23%20Lissajous%20Curves%0A%0A%20%20%20%20%20%20%20%20Parametric%20curves%20from%20two%20perpendicular%20oscillations%3A%0A%0A%20%20%20%20%20%20%20%20%60%60%60%0A%20%20%20%20%20%20%20%20x(t)%20%3D%20A%C2%B7sin(a%C2%B7t%20%2B%20%CE%B4)%0A%20%20%20%20%20%20%20%20y(t)%20%3D%20B%C2%B7sin(b%C2%B7t)%0A%20%20%20%20%20%20%20%20%60%60%60%0A%0A%20%20%20%20%20%20%20%20Where%3A%0A%20%20%20%20%20%20%20%20-%20**a%2C%20b**%3A%20Frequency%20ratio%20(determines%20the%20pattern)%0A%20%20%20%20%20%20%20%20-%20**%CE%B4**%3A%20Phase%20difference%0A%20%20%20%20%20%20%20%20-%20**A%2C%20B**%3A%20Amplitudes%0A%0A%20%20%20%20%20%20%20%20The%20ratio%20a%3Ab%20determines%20the%20number%20of%20lobes%20and%20symmetry!%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(%22%23%23%20Parameters%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20freq_a%20%3D%20mo.ui.slider(1%2C%2010%2C%20value%3D3%2C%20label%3D%22Frequency%20A%22%2C%20full_width%3DTrue)%0A%20%20%20%20freq_a%0A%20%20%20%20return%20(freq_a%2C)%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20freq_b%20%3D%20mo.ui.slider(1%2C%2010%2C%20value%3D4%2C%20label%3D%22Frequency%20B%22%2C%20full_width%3DTrue)%0A%20%20%20%20freq_b%0A%20%20%20%20return%20(freq_b%2C)%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20num_curves%20%3D%20mo.ui.slider(1%2C%2030%2C%20value%3D12%2C%20label%3D%22Number%20of%20Curves%22%2C%20full_width%3DTrue)%0A%20%20%20%20num_curves%0A%20%20%20%20return%20(num_curves%2C)%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20phase_spread%20%3D%20mo.ui.slider(0.0%2C%202.0%2C%20value%3D1.0%2C%20step%3D0.1%2C%20label%3D%22Phase%20Spread%20(%C3%97%20%CF%80)%22%2C%20full_width%3DTrue)%0A%20%20%20%20phase_spread%0A%20%20%20%20return%20(phase_spread%2C)%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20colormap%20%3D%20mo.ui.dropdown(%0A%20%20%20%20%20%20%20%20options%3D%5B%22twilight%22%2C%20%22rainbow%22%2C%20%22plasma%22%2C%20%22viridis%22%2C%20%22hsv%22%2C%20%22coolwarm%22%5D%2C%0A%20%20%20%20%20%20%20%20value%3D%22twilight%22%2C%0A%20%20%20%20%20%20%20%20label%3D%22Color%20Map%22%0A%20%20%20%20)%0A%20%20%20%20colormap%0A%20%20%20%20return%20(colormap%2C)%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20line_width%20%3D%20mo.ui.slider(0.5%2C%203.0%2C%20value%3D1.5%2C%20step%3D0.25%2C%20label%3D%22Line%20Width%22%2C%20full_width%3DTrue)%0A%20%20%20%20line_width%0A%20%20%20%20return%20(line_width%2C)%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(%22---%5Cn%23%23%20Visualization%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(colormap%2C%20freq_a%2C%20freq_b%2C%20line_width%2C%20np%2C%20num_curves%2C%20phase_spread%2C%20plt)%3A%0A%20%20%20%20%23%20Create%20figure%0A%20%20%20%20fig%2C%20ax%20%3D%20plt.subplots(figsize%3D(10%2C%2010)%2C%20facecolor%3D%22black%22)%0A%0A%20%20%20%20%23%20Time%20parameter%0A%20%20%20%20t%20%3D%20np.linspace(0%2C%202%20*%20np.pi%2C%202000)%0A%0A%20%20%20%20%23%20Get%20colormap%0A%20%20%20%20cmap%20%3D%20plt.get_cmap(colormap.value)%0A%20%20%20%20n%20%3D%20num_curves.value%0A%0A%20%20%20%20%23%20Draw%20multiple%20curves%20with%20phase%20offset%0A%20%20%20%20for%20i%20in%20range(n)%3A%0A%20%20%20%20%20%20%20%20%23%20Phase%20offset%20for%20this%20curve%0A%20%20%20%20%20%20%20%20phase%20%3D%20i%20*%20phase_spread.value%20*%20np.pi%20%2F%20n%0A%0A%20%20%20%20%20%20%20%20%23%20Lissajous%20curve%20with%20slight%20frequency%20variation%0A%20%20%20%20%20%20%20%20a%20%3D%20freq_a.value%20%2B%20i%20*%200.05%0A%20%20%20%20%20%20%20%20b%20%3D%20freq_b.value%20%2B%20i%20*%200.05%0A%0A%20%20%20%20%20%20%20%20x%20%3D%20np.sin(a%20*%20t%20%2B%20phase)%0A%20%20%20%20%20%20%20%20y%20%3D%20np.sin(b%20*%20t)%0A%0A%20%20%20%20%20%20%20%20%23%20Color%20based%20on%20position%20in%20sequence%0A%20%20%20%20%20%20%20%20color%20%3D%20cmap(i%20%2F%20n)%0A%0A%20%20%20%20%20%20%20%20ax.plot(x%2C%20y%2C%20color%3Dcolor%2C%20linewidth%3Dline_width.value%2C%20alpha%3D0.7)%0A%0A%20%20%20%20ax.set_aspect(%22equal%22)%0A%20%20%20%20ax.set_xlim(%5B-1.3%2C%201.3%5D)%0A%20%20%20%20ax.set_ylim(%5B-1.3%2C%201.3%5D)%0A%20%20%20%20ax.axis(%22off%22)%0A%20%20%20%20ax.set_title(%0A%20%20%20%20%20%20%20%20f%22Lissajous%20Curves%20%7C%20%7Bfreq_a.value%7D%3A%7Bfreq_b.value%7D%20%7C%20%7Bn%7D%20curves%22%2C%0A%20%20%20%20%20%20%20%20color%3D%22white%22%2C%20fontsize%3D12%2C%20pad%3D10%0A%20%20%20%20)%0A%20%20%20%20plt.tight_layout()%0A%20%20%20%20fig%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20---%0A%0A%20%20%20%20%20%20%20%20%23%23%20Frequency%20Ratios%0A%0A%20%20%20%20%20%20%20%20The%20ratio%20a%3Ab%20determines%20the%20pattern%3A%0A%0A%20%20%20%20%20%20%20%20%7C%20Ratio%20%7C%20Pattern%20%7C%0A%20%20%20%20%20%20%20%20%7C-------%7C---------%7C%0A%20%20%20%20%20%20%20%20%7C%201%3A1%20%7C%20Ellipse%20or%20line%20(depending%20on%20phase)%20%7C%0A%20%20%20%20%20%20%20%20%7C%201%3A2%20%7C%20Figure-8%20(infinity%20symbol)%20%7C%0A%20%20%20%20%20%20%20%20%7C%202%3A3%20%7C%20Pretzel%20shape%20%7C%0A%20%20%20%20%20%20%20%20%7C%203%3A4%20%7C%20Complex%20knot%20%7C%0A%20%20%20%20%20%20%20%20%7C%201%3A1%20with%20phase%20%7C%20Circle%20%7C%0A%0A%20%20%20%20%20%20%20%20**Integer%20ratios**%20create%20closed%20curves.%0A%20%20%20%20%20%20%20%20**Irrational%20ratios**%20create%20curves%20that%20never%20close%20(fill%20the%20rectangle).%0A%0A%20%20%20%20%20%20%20%20---%0A%0A%20%20%20%20%20%20%20%20%23%23%20Historical%20Context%0A%0A%20%20%20%20%20%20%20%20Lissajous%20figures%20were%20first%20studied%20by%3A%0A%20%20%20%20%20%20%20%20-%20**Nathaniel%20Bowditch**%20(1815)%20-%20mechanical%20demonstration%0A%20%20%20%20%20%20%20%20-%20**Jules%20Antoine%20Lissajous**%20(1857)%20-%20optical%20method%20using%20mirrors%0A%0A%20%20%20%20%20%20%20%20Before%20oscilloscopes%2C%20physicists%20used%20Lissajous%20figures%20to%20compare%0A%20%20%20%20%20%20%20%20frequencies%20of%20tuning%20forks!%0A%0A%20%20%20%20%20%20%20%20---%0A%0A%20%20%20%20%20%20%20%20%23%23%20Fourier%20Connection%0A%0A%20%20%20%20%20%20%20%20Any%20periodic%20signal%20can%20be%20decomposed%20into%20a%20sum%20of%20sine%20waves%20(Fourier%20series)%3A%0A%0A%20%20%20%20%20%20%20%20%60%60%60%0A%20%20%20%20%20%20%20%20f(t)%20%3D%20a%E2%82%80%20%2B%20%CE%A3%20%5Ba%E2%82%99%C2%B7cos(n%C2%B7%CF%89%C2%B7t)%20%2B%20b%E2%82%99%C2%B7sin(n%C2%B7%CF%89%C2%B7t)%5D%0A%20%20%20%20%20%20%20%20%60%60%60%0A%0A%20%20%20%20%20%20%20%20Lissajous%20curves%20visualize%20the%20**superposition**%20of%20two%20such%20waves%0A%20%20%20%20%20%20%20%20at%20right%20angles.%20The%20epicycle%20animation%20(rotating%20circles)%20shows%0A%20%20%20%20%20%20%20%20how%20complex%20curves%20emerge%20from%20simple%20circular%20motion.%0A%0A%20%20%20%20%20%20%20%20---%0A%0A%20%20%20%20%20%20%20%20%23%23%20Sound%20Visualization%0A%0A%20%20%20%20%20%20%20%20Lissajous%20figures%20appear%20on%20oscilloscopes%20when%3A%0A%20%20%20%20%20%20%20%20-%20X-input%3A%20One%20audio%20signal%0A%20%20%20%20%20%20%20%20-%20Y-input%3A%20Another%20audio%20signal%0A%0A%20%20%20%20%20%20%20%20The%20pattern%20reveals%20the%20**frequency%20relationship**%20between%20sounds%20-%0A%20%20%20%20%20%20%20%20perfect%20for%20tuning%20instruments%20or%20analyzing%20harmonics!%0A%0A%20%20%20%20%20%20%20%20---%0A%0A%20%20%20%20%20%20%20%20%5B%E2%86%90%20Voronoi%5D(06_voronoi.html)%20%7C%20%5BBack%20to%20Index%5D(index.html)%20%7C%20%5BDifferential%20Growth%20%E2%86%92%5D(08_differential_growth.html)%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20)%0A%20%20%20%20return%0A%0A%0Aif%20__name__%20%3D%3D%20%22__main__%22%3A%0A%20%20%20%20app.run()%0A</marimo-code></head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

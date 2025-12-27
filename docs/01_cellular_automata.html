@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="./favicon.ico" />
+    <!-- Preload is necessary because we show these images when we disconnect from the server,
+    but at that point we cannot load these images from the server -->
+    <link rel="preload" href="./assets/gradient-yHQUC_QB.png" as="image" />
+    <link rel="preload" href="./assets/noise-60BoTA8O.png" as="image" />
+    <!-- Preload the fonts -->
+    <link rel="preload" href="./assets/Lora-VariableFont_wght-B2ootaw-.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Regular-CxL0S8W7.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Bold-D9fedIX3.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Regular-BTCkDNvf.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Medium-DU3aDxX5.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Bold-CLVRCuM9.ttf" as="font" crossorigin="anonymous" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="a marimo app" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.json" />
+
+    <script data-marimo="true">
+      function __resizeIframe(obj) {
+        var scrollbarHeight = 20; // Max between windows, mac, and linux
+
+        function setHeight() {
+          var element = obj.contentWindow.document.documentElement;
+          // If there is no vertical scrollbar, we don't need to resize the iframe
+          if (element.scrollHeight === element.clientHeight) {
+            return;
+          }
+
+          // Create a new height that includes the scrollbar height if it's visible
+          var hasHorizontalScrollbar = element.scrollWidth > element.clientWidth;
+          var newHeight = element.scrollHeight + (hasHorizontalScrollbar ? scrollbarHeight : 0);
+
+          // Only update the height if it's different from the current height
+          if (obj.style.height !== `${newHeight}px`) {
+            obj.style.height = `${newHeight}px`;
+          }
+        }
+
+        // Resize the iframe to the height of the content and bottom scrollbar height
+        setHeight();
+
+        // Resize the iframe when the content changes
+        const resizeObserver = new ResizeObserver((entries) => {
+          setHeight();
+        });
+        resizeObserver.observe(obj.contentWindow.document.body);
+      }
+    </script>
+    <marimo-filename hidden>notebook.py</marimo-filename>
+    <marimo-mode data-mode='read' hidden></marimo-mode>
+    <marimo-version data-version='0.13.4' hidden></marimo-version>
+    <marimo-user-config data-config='{"completion": {"activate_on_typing": true, "copilot": false}, "display": {"code_editor_font_size": 14, "cell_output": "above", "theme": "light", "default_table_page_size": 10, "reference_highlighting": false, "dataframes": "rich", "default_width": "medium", "default_table_max_columns": 50}, "formatting": {"line_length": 79}, "keymap": {"preset": "default", "overrides": {}}, "runtime": {"auto_instantiate": true, "auto_reload": "off", "reactive_tests": true, "on_cell_change": "autorun", "watcher_on_save": "lazy", "output_max_bytes": 8000000, "std_stream_max_bytes": 1000000}, "save": {"autosave": "off", "autosave_delay": 1000, "format_on_save": false}, "package_management": {"manager": "pip"}, "server": {"browser": "default", "follow_symlink": false}, "language_servers": {"pylsp": {"enabled": true, "enable_mypy": true, "enable_ruff": true, "enable_flake8": false, "enable_pydocstyle": false, "enable_pylint": false, "enable_pyflakes": false}}, "snippets": {"custom_paths": [], "include_default_snippets": true}}' data-overrides='{}' hidden></marimo-user-config>
+    <marimo-app-config data-config='{"width": "medium", "app_title": "Cellular Automata - Rule-Based Emergence", "sql_output": "auto"}' hidden></marimo-app-config>
+    <marimo-server-token data-token='123' hidden></marimo-server-token>
+    <title>Cellular Automata - Rule-Based Emergence</title>
+    <script type="module" crossorigin src="./assets/index-DZa9A1hR.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-4fhpeWoJ.css">
+  <marimo-wasm hidden=""></marimo-wasm>
+    <script>
+        if (window.location.protocol === 'file:') {
+            alert('Warning: This file must be served by an HTTP server to function correctly.');
+        }
+    </script>
+    
+    <style>
+        #save-button {
+            display: none !important;
+        }
+        #filename-input {
+            display: none !important;
+        }
+    </style>
+    <marimo-code hidden="" data-show-code="false">import%20marimo%0A%0A__generated_with%20%3D%20%220.13.4%22%0Aapp%20%3D%20marimo.App(%0A%20%20%20%20width%3D%22medium%22%2C%0A%20%20%20%20app_title%3D%22Cellular%20Automata%20-%20Rule-Based%20Emergence%22%2C%0A)%0A%0A%0A%40app.cell%0Adef%20_()%3A%0A%20%20%20%20import%20marimo%20as%20mo%0A%20%20%20%20return%20(mo%2C)%0A%0A%0A%40app.cell%0Adef%20_()%3A%0A%20%20%20%20import%20numpy%20as%20np%0A%20%20%20%20import%20matplotlib.pyplot%20as%20plt%0A%20%20%20%20from%20scipy.ndimage%20import%20convolve%0A%20%20%20%20plt.style.use('dark_background')%0A%20%20%20%20return%20convolve%2C%20np%2C%20plt%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20%23%201.%20Cellular%20Automata%20-%20Rule-Based%20Emergence%0A%0A%20%20%20%20%20%20%20%20%5B%E2%86%90%20Back%20to%20Index%5D(index.html)%0A%0A%20%20%20%20%20%20%20%20---%0A%0A%20%20%20%20%20%20%20%20**Conway's%20Game%20of%20Life**%20demonstrates%20how%20minimal%20rules%20generate%20maximal%20emergence%3A%0A%20%20%20%20%20%20%20%20self-replication%2C%20oscillators%2C%20gliders%2C%20and%20complex%20organic%20patterns%20from%20simple%20initial%20conditions.%0A%0A%20%20%20%20%20%20%20%20%23%23%20The%20Rules%0A%0A%20%20%20%20%20%20%20%20Each%20cell%20is%20either%20**alive**%20(1)%20or%20**dead**%20(0).%20At%20each%20step%3A%0A%20%20%20%20%20%20%20%20-%20**Survival**%3A%20A%20live%20cell%20with%202-3%20neighbors%20survives%0A%20%20%20%20%20%20%20%20-%20**Birth**%3A%20A%20dead%20cell%20with%20exactly%203%20neighbors%20becomes%20alive%0A%20%20%20%20%20%20%20%20-%20**Death**%3A%20All%20other%20cells%20die%20or%20stay%20dead%0A%0A%20%20%20%20%20%20%20%20These%20simple%20rules%20create%20astonishing%20complexity%20-%20the%20system%20is%20**Turing%20complete**!%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(%22%23%23%20Parameters%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20seed%20%3D%20mo.ui.slider(1%2C%201000%2C%20value%3D42%2C%20label%3D%22Random%20Seed%22%2C%20full_width%3DTrue)%0A%20%20%20%20seed%0A%20%20%20%20return%20(seed%2C)%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20steps%20%3D%20mo.ui.slider(10%2C%20300%2C%20value%3D100%2C%20label%3D%22Evolution%20Steps%22%2C%20full_width%3DTrue)%0A%20%20%20%20steps%0A%20%20%20%20return%20(steps%2C)%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20grid_size%20%3D%20mo.ui.slider(50%2C%20300%2C%20value%3D150%2C%20label%3D%22Grid%20Size%22%2C%20full_width%3DTrue)%0A%20%20%20%20grid_size%0A%20%20%20%20return%20(grid_size%2C)%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20density%20%3D%20mo.ui.slider(0.1%2C%200.5%2C%20value%3D0.3%2C%20step%3D0.05%2C%20label%3D%22Initial%20Density%22%2C%20full_width%3DTrue)%0A%20%20%20%20density%0A%20%20%20%20return%20(density%2C)%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20colormap%20%3D%20mo.ui.dropdown(%0A%20%20%20%20%20%20%20%20options%3D%5B%22hot%22%2C%20%22plasma%22%2C%20%22viridis%22%2C%20%22magma%22%2C%20%22inferno%22%2C%20%22cividis%22%5D%2C%0A%20%20%20%20%20%20%20%20value%3D%22hot%22%2C%0A%20%20%20%20%20%20%20%20label%3D%22Color%20Map%22%0A%20%20%20%20)%0A%20%20%20%20colormap%0A%20%20%20%20return%20(colormap%2C)%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(%22---%5Cn%23%23%20Visualization%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(colormap%2C%20convolve%2C%20density%2C%20grid_size%2C%20np%2C%20plt%2C%20seed%2C%20steps)%3A%0A%20%20%20%20def%20run_cellular_automata(size%2C%20random_seed%2C%20num_steps%2C%20init_density)%3A%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20Run%20Conway's%20Game%20of%20Life%20simulation.%0A%0A%20%20%20%20%20%20%20%20Args%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20size%3A%20Grid%20dimension%20(size%20x%20size)%0A%20%20%20%20%20%20%20%20%20%20%20%20random_seed%3A%20Seed%20for%20reproducible%20randomness%0A%20%20%20%20%20%20%20%20%20%20%20%20num_steps%3A%20Number%20of%20evolution%20steps%0A%20%20%20%20%20%20%20%20%20%20%20%20init_density%3A%20Probability%20of%20cell%20being%20alive%20initially%0A%0A%20%20%20%20%20%20%20%20Returns%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20Final%20grid%20state%20after%20evolution%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20np.random.seed(random_seed)%0A%0A%20%20%20%20%20%20%20%20%23%20Initialize%20grid%20with%20random%20state%0A%20%20%20%20%20%20%20%20grid%20%3D%20np.random.choice(%0A%20%20%20%20%20%20%20%20%20%20%20%20%5B0%2C%201%5D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20size%3D(size%2C%20size)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20p%3D%5B1%20-%20init_density%2C%20init_density%5D%0A%20%20%20%20%20%20%20%20)%0A%0A%20%20%20%20%20%20%20%20%23%20Moore%20neighborhood%20kernel%20(8%20neighbors)%0A%20%20%20%20%20%20%20%20kernel%20%3D%20np.array(%5B%5B1%2C%201%2C%201%5D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5B1%2C%200%2C%201%5D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5B1%2C%201%2C%201%5D%5D)%0A%0A%20%20%20%20%20%20%20%20%23%20Evolution%20loop%0A%20%20%20%20%20%20%20%20for%20_%20in%20range(num_steps)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%23%20Count%20neighbors%20using%20convolution%0A%20%20%20%20%20%20%20%20%20%20%20%20neighbors%20%3D%20convolve(grid%2C%20kernel%2C%20mode%3D%22constant%22%2C%20cval%3D0)%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%23%20Apply%20Game%20of%20Life%20rules%0A%20%20%20%20%20%20%20%20%20%20%20%20birth%20%3D%20(grid%20%3D%3D%200)%20%26%20(neighbors%20%3D%3D%203)%0A%20%20%20%20%20%20%20%20%20%20%20%20survive%20%3D%20(grid%20%3D%3D%201)%20%26%20((neighbors%20%3D%3D%202)%20%7C%20(neighbors%20%3D%3D%203))%0A%20%20%20%20%20%20%20%20%20%20%20%20grid%20%3D%20(birth%20%7C%20survive).astype(int)%0A%0A%20%20%20%20%20%20%20%20return%20grid%0A%0A%20%20%20%20%23%20Run%20simulation%0A%20%20%20%20final_grid%20%3D%20run_cellular_automata(%0A%20%20%20%20%20%20%20%20grid_size.value%2C%0A%20%20%20%20%20%20%20%20seed.value%2C%0A%20%20%20%20%20%20%20%20steps.value%2C%0A%20%20%20%20%20%20%20%20density.value%0A%20%20%20%20)%0A%0A%20%20%20%20%23%20Visualization%0A%20%20%20%20fig%2C%20ax%20%3D%20plt.subplots(figsize%3D(10%2C%2010)%2C%20facecolor%3D%22black%22)%0A%20%20%20%20ax.imshow(final_grid%2C%20cmap%3Dcolormap.value%2C%20interpolation%3D%22nearest%22)%0A%20%20%20%20ax.axis(%22off%22)%0A%0A%20%20%20%20%23%20Statistics%0A%20%20%20%20alive_cells%20%3D%20np.sum(final_grid)%0A%20%20%20%20total_cells%20%3D%20final_grid.size%0A%20%20%20%20alive_pct%20%3D%20100%20*%20alive_cells%20%2F%20total_cells%0A%0A%20%20%20%20ax.set_title(%0A%20%20%20%20%20%20%20%20f%22Cellular%20Automata%20%7C%20Seed%3A%20%7Bseed.value%7D%20%7C%20Steps%3A%20%7Bsteps.value%7D%5Cn%22%0A%20%20%20%20%20%20%20%20f%22Alive%3A%20%7Balive_cells%3A%2C%7D%20%2F%20%7Btotal_cells%3A%2C%7D%20(%7Balive_pct%3A.1f%7D%25)%22%2C%0A%20%20%20%20%20%20%20%20color%3D%22white%22%2C%20fontsize%3D12%2C%20pad%3D10%0A%20%20%20%20)%0A%20%20%20%20plt.tight_layout()%0A%20%20%20%20fig%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20---%0A%0A%20%20%20%20%20%20%20%20%23%23%20How%20It%20Works%0A%0A%20%20%20%20%20%20%20%20The%20**Game%20of%20Life**%20uses%20a%20simple%20cellular%20automaton%20where%20each%20cell's%20next%20state%0A%20%20%20%20%20%20%20%20depends%20only%20on%20its%20current%20state%20and%20the%20count%20of%20its%208%20neighbors.%0A%0A%20%20%20%20%20%20%20%20**Key%20patterns%20to%20discover%3A**%0A%20%20%20%20%20%20%20%20-%20**Still%20lifes**%3A%20Stable%20patterns%20(blocks%2C%20beehives)%0A%20%20%20%20%20%20%20%20-%20**Oscillators**%3A%20Patterns%20that%20cycle%20(blinkers%2C%20toads)%0A%20%20%20%20%20%20%20%20-%20**Spaceships**%3A%20Patterns%20that%20move%20(gliders)%0A%20%20%20%20%20%20%20%20-%20**Methuselahs**%3A%20Small%20patterns%20that%20evolve%20for%20many%20generations%0A%0A%20%20%20%20%20%20%20%20**Try%20these%20seeds**%20for%20interesting%20patterns%3A%0A%20%20%20%20%20%20%20%20-%20Seed%2042%2C%20100%20steps%3A%20Classic%20evolution%0A%20%20%20%20%20%20%20%20-%20Seed%20777%2C%20200%20steps%3A%20More%20chaotic%0A%20%20%20%20%20%20%20%20-%20Seed%20123%2C%2050%20steps%3A%20Early-stage%20patterns%0A%0A%20%20%20%20%20%20%20%20---%0A%0A%20%20%20%20%20%20%20%20%23%23%20Mathematical%20Foundation%0A%0A%20%20%20%20%20%20%20%20The%20cellular%20automaton%20is%20defined%20by%3A%0A%20%20%20%20%20%20%20%20-%20**State%20space**%3A%20S%20%3D%20%7B0%2C%201%7D%0A%20%20%20%20%20%20%20%20-%20**Neighborhood**%3A%20Moore%20(8%20adjacent%20cells)%0A%20%20%20%20%20%20%20%20-%20**Transition%20function**%3A%20f(state%2C%20neighbors)%20based%20on%20birth%2Fsurvival%20rules%0A%0A%20%20%20%20%20%20%20%20This%20simple%20system%20exhibits%20**emergent%20complexity**%20-%20behavior%20that%20cannot%20be%0A%20%20%20%20%20%20%20%20predicted%20without%20running%20the%20simulation.%0A%0A%20%20%20%20%20%20%20%20---%0A%0A%20%20%20%20%20%20%20%20%5B%E2%86%90%20Back%20to%20Index%5D(index.html)%20%7C%20%5BNext%3A%20L-Systems%20%E2%86%92%5D(02_lsystems.html)%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20)%0A%20%20%20%20return%0A%0A%0Aif%20__name__%20%3D%3D%20%22__main__%22%3A%0A%20%20%20%20app.run()%0A</marimo-code></head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

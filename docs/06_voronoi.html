@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="./favicon.ico" />
+    <!-- Preload is necessary because we show these images when we disconnect from the server,
+    but at that point we cannot load these images from the server -->
+    <link rel="preload" href="./assets/gradient-yHQUC_QB.png" as="image" />
+    <link rel="preload" href="./assets/noise-60BoTA8O.png" as="image" />
+    <!-- Preload the fonts -->
+    <link rel="preload" href="./assets/Lora-VariableFont_wght-B2ootaw-.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Regular-CxL0S8W7.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Bold-D9fedIX3.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Regular-BTCkDNvf.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Medium-DU3aDxX5.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Bold-CLVRCuM9.ttf" as="font" crossorigin="anonymous" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="a marimo app" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.json" />
+
+    <script data-marimo="true">
+      function __resizeIframe(obj) {
+        var scrollbarHeight = 20; // Max between windows, mac, and linux
+
+        function setHeight() {
+          var element = obj.contentWindow.document.documentElement;
+          // If there is no vertical scrollbar, we don't need to resize the iframe
+          if (element.scrollHeight === element.clientHeight) {
+            return;
+          }
+
+          // Create a new height that includes the scrollbar height if it's visible
+          var hasHorizontalScrollbar = element.scrollWidth > element.clientWidth;
+          var newHeight = element.scrollHeight + (hasHorizontalScrollbar ? scrollbarHeight : 0);
+
+          // Only update the height if it's different from the current height
+          if (obj.style.height !== `${newHeight}px`) {
+            obj.style.height = `${newHeight}px`;
+          }
+        }
+
+        // Resize the iframe to the height of the content and bottom scrollbar height
+        setHeight();
+
+        // Resize the iframe when the content changes
+        const resizeObserver = new ResizeObserver((entries) => {
+          setHeight();
+        });
+        resizeObserver.observe(obj.contentWindow.document.body);
+      }
+    </script>
+    <marimo-filename hidden>notebook.py</marimo-filename>
+    <marimo-mode data-mode='read' hidden></marimo-mode>
+    <marimo-version data-version='0.13.4' hidden></marimo-version>
+    <marimo-user-config data-config='{"completion": {"activate_on_typing": true, "copilot": false}, "display": {"default_table_page_size": 10, "reference_highlighting": false, "default_width": "medium", "code_editor_font_size": 14, "default_table_max_columns": 50, "dataframes": "rich", "cell_output": "above", "theme": "light"}, "formatting": {"line_length": 79}, "keymap": {"preset": "default", "overrides": {}}, "runtime": {"auto_instantiate": true, "auto_reload": "off", "reactive_tests": true, "on_cell_change": "autorun", "watcher_on_save": "lazy", "output_max_bytes": 8000000, "std_stream_max_bytes": 1000000}, "save": {"autosave": "off", "autosave_delay": 1000, "format_on_save": false}, "package_management": {"manager": "pip"}, "server": {"browser": "default", "follow_symlink": false}, "language_servers": {"pylsp": {"enabled": true, "enable_mypy": true, "enable_ruff": true, "enable_flake8": false, "enable_pydocstyle": false, "enable_pylint": false, "enable_pyflakes": false}}, "snippets": {"custom_paths": [], "include_default_snippets": true}}' data-overrides='{}' hidden></marimo-user-config>
+    <marimo-app-config data-config='{"width": "medium", "app_title": "Voronoi Diagrams - Space Partitioning", "sql_output": "auto"}' hidden></marimo-app-config>
+    <marimo-server-token data-token='123' hidden></marimo-server-token>
+    <title>Voronoi Diagrams - Space Partitioning</title>
+    <script type="module" crossorigin src="./assets/index-DZa9A1hR.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-4fhpeWoJ.css">
+  <marimo-wasm hidden=""></marimo-wasm>
+    <script>
+        if (window.location.protocol === 'file:') {
+            alert('Warning: This file must be served by an HTTP server to function correctly.');
+        }
+    </script>
+    
+    <style>
+        #save-button {
+            display: none !important;
+        }
+        #filename-input {
+            display: none !important;
+        }
+    </style>
+    <marimo-code hidden="" data-show-code="false">import%20marimo%0A%0A__generated_with%20%3D%20%220.13.4%22%0Aapp%20%3D%20marimo.App(%0A%20%20%20%20width%3D%22medium%22%2C%0A%20%20%20%20app_title%3D%22Voronoi%20Diagrams%20-%20Space%20Partitioning%22%2C%0A)%0A%0A%0A%40app.cell%0Adef%20_()%3A%0A%20%20%20%20import%20marimo%20as%20mo%0A%20%20%20%20return%20(mo%2C)%0A%0A%0A%40app.cell%0Adef%20_()%3A%0A%20%20%20%20import%20numpy%20as%20np%0A%20%20%20%20import%20matplotlib.pyplot%20as%20plt%0A%20%20%20%20from%20scipy.spatial%20import%20Voronoi%2C%20Delaunay%0A%20%20%20%20plt.style.use('dark_background')%0A%20%20%20%20return%20Delaunay%2C%20Voronoi%2C%20np%2C%20plt%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20%23%206.%20Voronoi%20Diagrams%20%26%20Delaunay%20Triangulation%0A%0A%20%20%20%20%20%20%20%20%5B%E2%86%90%20Back%20to%20Index%5D(index.html)%0A%0A%20%20%20%20%20%20%20%20---%0A%0A%20%20%20%20%20%20%20%20**Voronoi%20diagrams**%20partition%20space%20so%20each%20region%20contains%20all%20points%0A%20%20%20%20%20%20%20%20closest%20to%20one%20seed.%20Natural%20geometry%3A%20crystals%2C%20cells%2C%20city%20districts.%0A%0A%20%20%20%20%20%20%20%20%23%23%20Key%20Concepts%0A%0A%20%20%20%20%20%20%20%20-%20**Voronoi%20cell**%3A%20Region%20of%20all%20points%20closest%20to%20a%20particular%20seed%0A%20%20%20%20%20%20%20%20-%20**Voronoi%20edge**%3A%20Equidistant%20from%20two%20seeds%0A%20%20%20%20%20%20%20%20-%20**Voronoi%20vertex**%3A%20Equidistant%20from%20three%2B%20seeds%0A%20%20%20%20%20%20%20%20-%20**Delaunay%20triangulation**%3A%20Dual%20graph%20-%20connects%20seeds%20whose%20cells%20share%20an%20edge%0A%0A%20%20%20%20%20%20%20%20%23%23%20Applications%0A%0A%20%20%20%20%20%20%20%20-%20Cell%20biology%20(cell%20territories)%0A%20%20%20%20%20%20%20%20-%20Urban%20planning%20(service%20districts)%0A%20%20%20%20%20%20%20%20-%20Crystallography%20(grain%20boundaries)%0A%20%20%20%20%20%20%20%20-%20Computer%20graphics%20(procedural%20textures)%0A%20%20%20%20%20%20%20%20-%20Nearest-neighbor%20queries%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(%22%23%23%20Parameters%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20num_points%20%3D%20mo.ui.slider(10%2C%20200%2C%20value%3D50%2C%20label%3D%22Number%20of%20Points%22%2C%20full_width%3DTrue)%0A%20%20%20%20num_points%0A%20%20%20%20return%20(num_points%2C)%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20seed%20%3D%20mo.ui.slider(1%2C%20100%2C%20value%3D42%2C%20label%3D%22Random%20Seed%22%2C%20full_width%3DTrue)%0A%20%20%20%20seed%0A%20%20%20%20return%20(seed%2C)%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20display_mode%20%3D%20mo.ui.dropdown(%0A%20%20%20%20%20%20%20%20options%3D%5B%22Voronoi%22%2C%20%22Delaunay%22%2C%20%22Both%22%5D%2C%0A%20%20%20%20%20%20%20%20value%3D%22Voronoi%22%2C%0A%20%20%20%20%20%20%20%20label%3D%22Display%20Mode%22%0A%20%20%20%20)%0A%20%20%20%20display_mode%0A%20%20%20%20return%20(display_mode%2C)%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20colormap%20%3D%20mo.ui.dropdown(%0A%20%20%20%20%20%20%20%20options%3D%5B%22rainbow%22%2C%20%22viridis%22%2C%20%22plasma%22%2C%20%22Set3%22%2C%20%22tab20%22%2C%20%22twilight%22%5D%2C%0A%20%20%20%20%20%20%20%20value%3D%22rainbow%22%2C%0A%20%20%20%20%20%20%20%20label%3D%22Color%20Map%22%0A%20%20%20%20)%0A%20%20%20%20colormap%0A%20%20%20%20return%20(colormap%2C)%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20show_points%20%3D%20mo.ui.checkbox(value%3DTrue%2C%20label%3D%22Show%20seed%20points%22)%0A%20%20%20%20show_points%0A%20%20%20%20return%20(show_points%2C)%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(%22---%5Cn%23%23%20Visualization%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(%0A%20%20%20%20Delaunay%2C%0A%20%20%20%20Voronoi%2C%0A%20%20%20%20colormap%2C%0A%20%20%20%20display_mode%2C%0A%20%20%20%20np%2C%0A%20%20%20%20num_points%2C%0A%20%20%20%20plt%2C%0A%20%20%20%20seed%2C%0A%20%20%20%20show_points%2C%0A)%3A%0A%20%20%20%20%23%20Generate%20random%20points%0A%20%20%20%20np.random.seed(seed.value)%0A%20%20%20%20points%20%3D%20np.random.rand(num_points.value%2C%202)%0A%0A%20%20%20%20%23%20Create%20figure%0A%20%20%20%20fig%2C%20ax%20%3D%20plt.subplots(figsize%3D(10%2C%2010)%2C%20facecolor%3D%22black%22)%0A%0A%20%20%20%20%23%20Get%20colormap%0A%20%20%20%20cmap%20%3D%20plt.get_cmap(colormap.value)%0A%20%20%20%20colors%20%3D%20%5Bcmap(i%20%2F%20num_points.value)%20for%20i%20in%20range(num_points.value)%5D%0A%0A%20%20%20%20%23%20Draw%20Voronoi%20diagram%0A%20%20%20%20if%20display_mode.value%20in%20%5B%22Voronoi%22%2C%20%22Both%22%5D%3A%0A%20%20%20%20%20%20%20%20vor%20%3D%20Voronoi(points)%0A%0A%20%20%20%20%20%20%20%20for%20i%2C%20point_idx%20in%20enumerate(vor.point_region)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20region%20%3D%20vor.regions%5Bpoint_idx%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20if%20-1%20not%20in%20region%20and%20len(region)%20%3E%200%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20polygon%20%3D%20%5Bvor.vertices%5Bj%5D%20for%20j%20in%20region%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20Clip%20to%20%5B0%2C1%5D%20bounds%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20polygon%20%3D%20np.array(polygon)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20ax.fill(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20polygon%5B%3A%2C%200%5D%2C%20polygon%5B%3A%2C%201%5D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20alpha%3D0.6%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20color%3Dcolors%5Bi%20%25%20len(colors)%5D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20edgecolor%3D%22white%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20linewidth%3D0.5%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20)%0A%0A%20%20%20%20%23%20Draw%20Delaunay%20triangulation%0A%20%20%20%20if%20display_mode.value%20in%20%5B%22Delaunay%22%2C%20%22Both%22%5D%3A%0A%20%20%20%20%20%20%20%20tri%20%3D%20Delaunay(points)%0A%20%20%20%20%20%20%20%20edge_color%20%3D%20%22cyan%22%20if%20display_mode.value%20%3D%3D%20%22Both%22%20else%20%22white%22%0A%20%20%20%20%20%20%20%20ax.triplot(%0A%20%20%20%20%20%20%20%20%20%20%20%20points%5B%3A%2C%200%5D%2C%20points%5B%3A%2C%201%5D%2C%20tri.simplices%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20color%3Dedge_color%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20linewidth%3D0.8%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20alpha%3D0.8%0A%20%20%20%20%20%20%20%20)%0A%0A%20%20%20%20%23%20Draw%20seed%20points%0A%20%20%20%20if%20show_points.value%3A%0A%20%20%20%20%20%20%20%20ax.scatter(%0A%20%20%20%20%20%20%20%20%20%20%20%20points%5B%3A%2C%200%5D%2C%20points%5B%3A%2C%201%5D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20c%3D%22white%22%2C%20s%3D30%2C%20zorder%3D5%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20edgecolors%3D%22black%22%2C%20linewidths%3D0.5%0A%20%20%20%20%20%20%20%20)%0A%0A%20%20%20%20ax.set_xlim(%5B0%2C%201%5D)%0A%20%20%20%20ax.set_ylim(%5B0%2C%201%5D)%0A%20%20%20%20ax.set_aspect(%22equal%22)%0A%20%20%20%20ax.axis(%22off%22)%0A%20%20%20%20ax.set_title(%0A%20%20%20%20%20%20%20%20f%22%7Bdisplay_mode.value%7D%20%7C%20%7Bnum_points.value%7D%20points%20%7C%20Seed%3A%20%7Bseed.value%7D%22%2C%0A%20%20%20%20%20%20%20%20color%3D%22white%22%2C%20fontsize%3D12%2C%20pad%3D10%0A%20%20%20%20)%0A%20%20%20%20plt.tight_layout()%0A%20%20%20%20fig%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20---%0A%0A%20%20%20%20%20%20%20%20%23%23%20Voronoi%20vs%20Delaunay%20Duality%0A%0A%20%20%20%20%20%20%20%20These%20two%20structures%20are%20**duals**%20of%20each%20other%3A%0A%0A%20%20%20%20%20%20%20%20%7C%20Voronoi%20%7C%20Delaunay%20%7C%0A%20%20%20%20%20%20%20%20%7C---------%7C----------%7C%0A%20%20%20%20%20%20%20%20%7C%20Face%20(region)%20%7C%20Vertex%20(point)%20%7C%0A%20%20%20%20%20%20%20%20%7C%20Edge%20%7C%20Edge%20%7C%0A%20%20%20%20%20%20%20%20%7C%20Vertex%20%7C%20Face%20(triangle)%20%7C%0A%0A%20%20%20%20%20%20%20%20If%20you%20connect%20the%20Voronoi%20vertices%20that%20share%20an%20edge%2C%20you%20get%20the%20Delaunay%20triangulation.%0A%20%20%20%20%20%20%20%20If%20you%20connect%20the%20circumcenters%20of%20Delaunay%20triangles%2C%20you%20get%20the%20Voronoi%20diagram.%0A%0A%20%20%20%20%20%20%20%20---%0A%0A%20%20%20%20%20%20%20%20%23%23%20Properties%0A%0A%20%20%20%20%20%20%20%20**Voronoi%20diagram%3A**%0A%20%20%20%20%20%20%20%20-%20Each%20cell%20is%20convex%0A%20%20%20%20%20%20%20%20-%20Edges%20are%20perpendicular%20bisectors%20of%20point%20pairs%0A%20%20%20%20%20%20%20%20-%20Used%20for%20nearest-neighbor%20queries%20in%20O(log%20n)%20time%0A%0A%20%20%20%20%20%20%20%20**Delaunay%20triangulation%3A**%0A%20%20%20%20%20%20%20%20-%20Maximizes%20minimum%20angle%20(avoids%20skinny%20triangles)%0A%20%20%20%20%20%20%20%20-%20No%20point%20lies%20inside%20any%20triangle's%20circumcircle%0A%20%20%20%20%20%20%20%20-%20Unique%20for%20points%20in%20general%20position%0A%0A%20%20%20%20%20%20%20%20---%0A%0A%20%20%20%20%20%20%20%20%23%23%20Natural%20Occurrences%0A%0A%20%20%20%20%20%20%20%20Voronoi%20patterns%20appear%20everywhere%20in%20nature%3A%0A%20%20%20%20%20%20%20%20-%20**Giraffe%20spots**%20-%20pigment%20cells%20establish%20territories%0A%20%20%20%20%20%20%20%20-%20**Dragonfly%20wings**%20-%20cell%20membranes%0A%20%20%20%20%20%20%20%20-%20**Mud%20cracks**%20-%20stress%20relief%20patterns%0A%20%20%20%20%20%20%20%20-%20**Foam%20bubbles**%20-%20minimal%20surface%20area%0A%20%20%20%20%20%20%20%20-%20**Galaxy%20distribution**%20-%20cosmic%20web%20structure%0A%0A%20%20%20%20%20%20%20%20---%0A%0A%20%20%20%20%20%20%20%20%5B%E2%86%90%20Reaction-Diffusion%5D(05_reaction_diffusion.html)%20%7C%20%5BBack%20to%20Index%5D(index.html)%20%7C%20%5BFourier%20%E2%86%92%5D(07_fourier.html)%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20)%0A%20%20%20%20return%0A%0A%0Aif%20__name__%20%3D%3D%20%22__main__%22%3A%0A%20%20%20%20app.run()%0A</marimo-code></head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

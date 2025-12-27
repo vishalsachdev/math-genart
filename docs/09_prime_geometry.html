@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="./favicon.ico" />
+    <!-- Preload is necessary because we show these images when we disconnect from the server,
+    but at that point we cannot load these images from the server -->
+    <link rel="preload" href="./assets/gradient-yHQUC_QB.png" as="image" />
+    <link rel="preload" href="./assets/noise-60BoTA8O.png" as="image" />
+    <!-- Preload the fonts -->
+    <link rel="preload" href="./assets/Lora-VariableFont_wght-B2ootaw-.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Regular-CxL0S8W7.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Bold-D9fedIX3.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Regular-BTCkDNvf.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Medium-DU3aDxX5.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Bold-CLVRCuM9.ttf" as="font" crossorigin="anonymous" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="a marimo app" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.json" />
+
+    <script data-marimo="true">
+      function __resizeIframe(obj) {
+        var scrollbarHeight = 20; // Max between windows, mac, and linux
+
+        function setHeight() {
+          var element = obj.contentWindow.document.documentElement;
+          // If there is no vertical scrollbar, we don't need to resize the iframe
+          if (element.scrollHeight === element.clientHeight) {
+            return;
+          }
+
+          // Create a new height that includes the scrollbar height if it's visible
+          var hasHorizontalScrollbar = element.scrollWidth > element.clientWidth;
+          var newHeight = element.scrollHeight + (hasHorizontalScrollbar ? scrollbarHeight : 0);
+
+          // Only update the height if it's different from the current height
+          if (obj.style.height !== `${newHeight}px`) {
+            obj.style.height = `${newHeight}px`;
+          }
+        }
+
+        // Resize the iframe to the height of the content and bottom scrollbar height
+        setHeight();
+
+        // Resize the iframe when the content changes
+        const resizeObserver = new ResizeObserver((entries) => {
+          setHeight();
+        });
+        resizeObserver.observe(obj.contentWindow.document.body);
+      }
+    </script>
+    <marimo-filename hidden>notebook.py</marimo-filename>
+    <marimo-mode data-mode='read' hidden></marimo-mode>
+    <marimo-version data-version='0.13.4' hidden></marimo-version>
+    <marimo-user-config data-config='{"completion": {"activate_on_typing": true, "copilot": false}, "display": {"cell_output": "above", "default_table_max_columns": 50, "theme": "light", "default_width": "medium", "dataframes": "rich", "code_editor_font_size": 14, "default_table_page_size": 10, "reference_highlighting": false}, "formatting": {"line_length": 79}, "keymap": {"preset": "default", "overrides": {}}, "runtime": {"auto_instantiate": true, "auto_reload": "off", "reactive_tests": true, "on_cell_change": "autorun", "watcher_on_save": "lazy", "output_max_bytes": 8000000, "std_stream_max_bytes": 1000000}, "save": {"autosave": "off", "autosave_delay": 1000, "format_on_save": false}, "package_management": {"manager": "pip"}, "server": {"browser": "default", "follow_symlink": false}, "language_servers": {"pylsp": {"enabled": true, "enable_mypy": true, "enable_ruff": true, "enable_flake8": false, "enable_pydocstyle": false, "enable_pylint": false, "enable_pyflakes": false}}, "snippets": {"custom_paths": [], "include_default_snippets": true}}' data-overrides='{}' hidden></marimo-user-config>
+    <marimo-app-config data-config='{"width": "medium", "app_title": "Prime Geometry - Arithmetic Aesthetics", "sql_output": "auto"}' hidden></marimo-app-config>
+    <marimo-server-token data-token='123' hidden></marimo-server-token>
+    <title>Prime Geometry - Arithmetic Aesthetics</title>
+    <script type="module" crossorigin src="./assets/index-DZa9A1hR.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-4fhpeWoJ.css">
+  <marimo-wasm hidden=""></marimo-wasm>
+    <script>
+        if (window.location.protocol === 'file:') {
+            alert('Warning: This file must be served by an HTTP server to function correctly.');
+        }
+    </script>
+    
+    <style>
+        #save-button {
+            display: none !important;
+        }
+        #filename-input {
+            display: none !important;
+        }
+    </style>
+    <marimo-code hidden="" data-show-code="false">import%20marimo%0A%0A__generated_with%20%3D%20%220.13.4%22%0Aapp%20%3D%20marimo.App(%0A%20%20%20%20width%3D%22medium%22%2C%0A%20%20%20%20app_title%3D%22Prime%20Geometry%20-%20Arithmetic%20Aesthetics%22%2C%0A)%0A%0A%0A%40app.cell%0Adef%20_()%3A%0A%20%20%20%20import%20marimo%20as%20mo%0A%20%20%20%20return%20(mo%2C)%0A%0A%0A%40app.cell%0Adef%20_()%3A%0A%20%20%20%20import%20numpy%20as%20np%0A%20%20%20%20import%20matplotlib.pyplot%20as%20plt%0A%20%20%20%20plt.style.use('dark_background')%0A%20%20%20%20return%20(plt%2C)%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20%23%209.%20Prime%20Number%20Geometry%20-%20Arithmetic%20Aesthetics%0A%0A%20%20%20%20%20%20%20%20%5B%E2%86%90%20Back%20to%20Index%5D(index.html)%0A%0A%20%20%20%20%20%20%20%20---%0A%0A%20%20%20%20%20%20%20%20Pure%20arithmetic%20yields%20unexpected%20symmetry.%20**Ulam%20spirals**%20reveal%20hidden%0A%20%20%20%20%20%20%20%20patterns%20in%20prime%20numbers%20that%20mathematicians%20still%20don't%20fully%20understand.%0A%0A%20%20%20%20%20%20%20%20%23%23%20The%20Ulam%20Spiral%0A%0A%20%20%20%20%20%20%20%20Discovered%20by%20Stanislaw%20Ulam%20in%201963%20while%20doodling%20during%20a%20boring%20meeting%3A%0A%0A%20%20%20%20%20%20%20%201.%20Write%20integers%20in%20a%20spiral%20pattern%20starting%20from%201%0A%20%20%20%20%20%20%20%202.%20Circle%20all%20the%20prime%20numbers%0A%20%20%20%20%20%20%20%203.%20Notice%20the%20diagonal%20patterns!%0A%0A%20%20%20%20%20%20%20%20%60%60%60%0A%20%20%20%20%20%20%20%2017-16-15-14-13%0A%20%20%20%20%20%20%20%20%7C%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%20%20%20%20%20%20%20%2018%20%205-%204-%203%2012%0A%20%20%20%20%20%20%20%20%7C%20%20%20%7C%20%20%20%20%20%7C%20%20%7C%0A%20%20%20%20%20%20%20%2019%20%206%20%201-%202%2011%0A%20%20%20%20%20%20%20%20%7C%20%20%20%7C%20%20%20%20%20%20%20%20%7C%0A%20%20%20%20%20%20%20%2020%20%207-%208-%209-10%0A%20%20%20%20%20%20%20%20%7C%0A%20%20%20%20%20%20%20%2021-22-23-24-25-...%0A%20%20%20%20%20%20%20%20%60%60%60%0A%0A%20%20%20%20%20%20%20%20Primes%20tend%20to%20cluster%20on%20certain%20diagonals!%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(%22%23%23%20Parameters%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20max_number%20%3D%20mo.ui.slider(1000%2C%20100000%2C%20value%3D20000%2C%20step%3D1000%2C%20label%3D%22Maximum%20Number%22%2C%20full_width%3DTrue)%0A%20%20%20%20max_number%0A%20%20%20%20return%20(max_number%2C)%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20point_size%20%3D%20mo.ui.slider(0.1%2C%205.0%2C%20value%3D1.0%2C%20step%3D0.1%2C%20label%3D%22Point%20Size%22%2C%20full_width%3DTrue)%0A%20%20%20%20point_size%0A%20%20%20%20return%20(point_size%2C)%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20point_color%20%3D%20mo.ui.dropdown(%0A%20%20%20%20%20%20%20%20options%3D%5B%22cyan%22%2C%20%22lime%22%2C%20%22yellow%22%2C%20%22magenta%22%2C%20%22white%22%2C%20%22orange%22%5D%2C%0A%20%20%20%20%20%20%20%20value%3D%22cyan%22%2C%0A%20%20%20%20%20%20%20%20label%3D%22Point%20Color%22%0A%20%20%20%20)%0A%20%20%20%20point_color%0A%20%20%20%20return%20(point_color%2C)%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(%22---%5Cn%23%23%20Visualization%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(max_number%2C%20plt%2C%20point_color%2C%20point_size)%3A%0A%20%20%20%20def%20sieve_of_eratosthenes(n)%3A%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20Efficient%20prime%20number%20generation%20using%20Sieve%20of%20Eratosthenes.%0A%0A%20%20%20%20%20%20%20%20Returns%20a%20set%20of%20all%20primes%20up%20to%20n.%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20is_prime%20%3D%20%5BTrue%5D%20*%20(n%20%2B%201)%0A%20%20%20%20%20%20%20%20is_prime%5B0%5D%20%3D%20is_prime%5B1%5D%20%3D%20False%0A%0A%20%20%20%20%20%20%20%20for%20i%20in%20range(2%2C%20int(n**0.5)%20%2B%201)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20if%20is_prime%5Bi%5D%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20for%20j%20in%20range(i%20*%20i%2C%20n%20%2B%201%2C%20i)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20is_prime%5Bj%5D%20%3D%20False%0A%0A%20%20%20%20%20%20%20%20return%20set(i%20for%20i%2C%20p%20in%20enumerate(is_prime)%20if%20p)%0A%0A%20%20%20%20def%20ulam_spiral_coordinates(n)%3A%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20Generate%20spiral%20coordinates%20for%20numbers%201%20to%20n.%0A%0A%20%20%20%20%20%20%20%20Returns%20a%20dictionary%20mapping%20number%20-%3E%20(x%2C%20y)%20coordinate.%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20coords%20%3D%20%7B1%3A%20(0%2C%200)%7D%0A%20%20%20%20%20%20%20%20x%2C%20y%20%3D%200%2C%200%0A%20%20%20%20%20%20%20%20dx%2C%20dy%20%3D%201%2C%200%20%20%23%20Start%20moving%20right%0A%20%20%20%20%20%20%20%20steps_in_direction%20%3D%201%0A%20%20%20%20%20%20%20%20steps_taken%20%3D%200%0A%20%20%20%20%20%20%20%20direction_changes%20%3D%200%0A%0A%20%20%20%20%20%20%20%20for%20num%20in%20range(2%2C%20n%20%2B%201)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20x%20%2B%3D%20dx%0A%20%20%20%20%20%20%20%20%20%20%20%20y%20%2B%3D%20dy%0A%20%20%20%20%20%20%20%20%20%20%20%20coords%5Bnum%5D%20%3D%20(x%2C%20y)%0A%20%20%20%20%20%20%20%20%20%20%20%20steps_taken%20%2B%3D%201%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20if%20steps_taken%20%3D%3D%20steps_in_direction%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20steps_taken%20%3D%200%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20Turn%20left%3A%20(dx%2C%20dy)%20-%3E%20(-dy%2C%20dx)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20dx%2C%20dy%20%3D%20-dy%2C%20dx%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20direction_changes%20%2B%3D%201%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20Increase%20steps%20every%202%20turns%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if%20direction_changes%20%25%202%20%3D%3D%200%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20steps_in_direction%20%2B%3D%201%0A%0A%20%20%20%20%20%20%20%20return%20coords%0A%0A%20%20%20%20%23%20Generate%20primes%20and%20coordinates%0A%20%20%20%20primes%20%3D%20sieve_of_eratosthenes(max_number.value)%0A%20%20%20%20coords%20%3D%20ulam_spiral_coordinates(max_number.value)%0A%0A%20%20%20%20%23%20Get%20prime%20coordinates%0A%20%20%20%20prime_coords%20%3D%20%5Bcoords%5Bp%5D%20for%20p%20in%20primes%20if%20p%20in%20coords%5D%0A%0A%20%20%20%20%23%20Visualization%0A%20%20%20%20fig%2C%20ax%20%3D%20plt.subplots(figsize%3D(10%2C%2010)%2C%20facecolor%3D%22black%22)%0A%0A%20%20%20%20if%20prime_coords%3A%0A%20%20%20%20%20%20%20%20px%2C%20py%20%3D%20zip(*prime_coords)%0A%20%20%20%20%20%20%20%20ax.scatter(px%2C%20py%2C%20c%3Dpoint_color.value%2C%20s%3Dpoint_size.value%2C%20alpha%3D0.6)%0A%0A%20%20%20%20ax.set_aspect(%22equal%22)%0A%20%20%20%20ax.axis(%22off%22)%0A%20%20%20%20ax.set_title(%0A%20%20%20%20%20%20%20%20f%22Ulam%20Spiral%20%7C%20%7Blen(primes)%3A%2C%7D%20primes%20up%20to%20%7Bmax_number.value%3A%2C%7D%22%2C%0A%20%20%20%20%20%20%20%20color%3D%22white%22%2C%20fontsize%3D12%2C%20pad%3D10%0A%20%20%20%20)%0A%20%20%20%20plt.tight_layout()%0A%20%20%20%20fig%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20---%0A%0A%20%20%20%20%20%20%20%20%23%23%20Why%20Diagonals%3F%0A%0A%20%20%20%20%20%20%20%20The%20diagonal%20lines%20correspond%20to%20**quadratic%20polynomials**.%20For%20example%3A%0A%0A%20%20%20%20%20%20%20%20-%20**Main%20diagonal**%3A%20n%C2%B2%20%2B%20n%20%2B%2041%20(Euler's%20prime-generating%20polynomial)%0A%20%20%20%20%20%20%20%20-%20Generates%20primes%20for%20n%20%3D%200%20to%2039!%0A%0A%20%20%20%20%20%20%20%20Many%20quadratic%20polynomials%20happen%20to%20generate%20unusually%20many%20primes%2C%0A%20%20%20%20%20%20%20%20and%20these%20show%20up%20as%20diagonal%20clusters%20in%20the%20Ulam%20spiral.%0A%0A%20%20%20%20%20%20%20%20---%0A%0A%20%20%20%20%20%20%20%20%23%23%20Mathematical%20Mystery%0A%0A%20%20%20%20%20%20%20%20The%20diagonal%20patterns%20are%3A%0A%20%20%20%20%20%20%20%20-%20**Real**%3A%20Statistically%20significant%20clustering%0A%20%20%20%20%20%20%20%20-%20**Unexplained**%3A%20No%20complete%20theory%20explains%20why%0A%20%20%20%20%20%20%20%20-%20**Connected**%3A%20To%20deep%20questions%20about%20prime%20distribution%0A%0A%20%20%20%20%20%20%20%20The%20Riemann%20Hypothesis%20(one%20of%20the%20greatest%20unsolved%20problems)%20relates%0A%20%20%20%20%20%20%20%20to%20how%20primes%20are%20distributed%20among%20integers.%0A%0A%20%20%20%20%20%20%20%20---%0A%0A%20%20%20%20%20%20%20%20%23%23%20Other%20Prime%20Visualizations%0A%0A%20%20%20%20%20%20%20%20-%20**Sacks%20Spiral**%3A%20Primes%20on%20Archimedean%20spiral%20(squares%20at%20integers)%0A%20%20%20%20%20%20%20%20-%20**Klauber%20Triangle**%3A%20Triangular%20arrangement%0A%20%20%20%20%20%20%20%20-%20**Prime%20Factorization%20Diagrams**%3A%20Color%20by%20factors%0A%20%20%20%20%20%20%20%20-%20**Modular%20Patterns**%3A%20Primes%20mod%20n%20create%20patterns%0A%0A%20%20%20%20%20%20%20%20---%0A%0A%20%20%20%20%20%20%20%20%23%23%20Prime%20Facts%0A%0A%20%20%20%20%20%20%20%20-%20There%20are%20infinitely%20many%20primes%20(Euclid%2C%20300%20BCE)%0A%20%20%20%20%20%20%20%20-%20Prime%20gaps%20can%20be%20arbitrarily%20large%0A%20%20%20%20%20%20%20%20-%20Twin%20primes%20(p%2C%20p%2B2)%20may%20be%20infinite%20(unproven!)%0A%20%20%20%20%20%20%20%20-%20The%20largest%20known%20prime%20has%2024%2B%20million%20digits%0A%0A%20%20%20%20%20%20%20%20---%0A%0A%20%20%20%20%20%20%20%20%5B%E2%86%90%20Differential%20Growth%5D(08_differential_growth.html)%20%7C%20%5BBack%20to%20Index%5D(index.html)%20%7C%20%5BGraph%20Networks%20%E2%86%92%5D(10_graph_networks.html)%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20)%0A%20%20%20%20return%0A%0A%0Aif%20__name__%20%3D%3D%20%22__main__%22%3A%0A%20%20%20%20app.run()%0A</marimo-code></head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
