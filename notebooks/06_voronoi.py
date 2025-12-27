@@ -1,7 +1,7 @@
 import marimo
 
 __generated_with = "0.13.4"
-app = marimo.App(width="medium", app_title="Voronoi Diagrams - Space Partitioning")
+app = marimo.App(width="full", app_title="Voronoi Diagrams - Space Partitioning")
 
 
 @app.cell
@@ -24,28 +24,10 @@ def _(mo):
     mo.md(
         """
         # 6. Voronoi Diagrams & Delaunay Triangulation
-
         [← Back to Index](index.html)
 
-        ---
-
-        **Voronoi diagrams** partition space so each region contains all points
-        closest to one seed. Natural geometry: crystals, cells, city districts.
-
-        ## Key Concepts
-
-        - **Voronoi cell**: Region of all points closest to a particular seed
-        - **Voronoi edge**: Equidistant from two seeds
-        - **Voronoi vertex**: Equidistant from three+ seeds
-        - **Delaunay triangulation**: Dual graph - connects seeds whose cells share an edge
-
-        ## Applications
-
-        - Cell biology (cell territories)
-        - Urban planning (service districts)
-        - Crystallography (grain boundaries)
-        - Computer graphics (procedural textures)
-        - Nearest-neighbor queries
+        **Voronoi diagrams** partition space so each region contains all points closest to one seed.
+        Natural geometry found in crystals, cells, and city districts. Delaunay triangulation is the dual graph.
         """
     )
     return
@@ -53,67 +35,30 @@ def _(mo):
 
 @app.cell
 def _(mo):
-    mo.md("## Parameters")
-    return
-
-
-@app.cell
-def _(mo):
     num_points = mo.ui.slider(10, 200, value=50, label="Number of Points", full_width=True)
-    num_points
-    return (num_points,)
-
-
-@app.cell
-def _(mo):
     seed = mo.ui.slider(1, 100, value=42, label="Random Seed", full_width=True)
-    seed
-    return (seed,)
-
-
-@app.cell
-def _(mo):
     display_mode = mo.ui.dropdown(
         options=["Voronoi", "Delaunay", "Both"],
         value="Voronoi",
         label="Display Mode"
     )
-    display_mode
-    return (display_mode,)
-
-
-@app.cell
-def _(mo):
     colormap = mo.ui.dropdown(
         options=["rainbow", "viridis", "plasma", "Set3", "tab20", "twilight"],
         value="rainbow",
         label="Color Map"
     )
-    colormap
-    return (colormap,)
-
-
-@app.cell
-def _(mo):
     show_points = mo.ui.checkbox(value=True, label="Show seed points")
-    show_points
-    return (show_points,)
+    return num_points, seed, display_mode, colormap, show_points
 
 
 @app.cell
-def _(mo):
-    mo.md("---\n## Visualization")
-    return
-
-
-@app.cell
-def _(Delaunay, Voronoi, colormap, display_mode, np, num_points, plt, seed, show_points):
+def _(Delaunay, Voronoi, colormap, display_mode, mo, np, num_points, plt, seed, show_points):
     # Generate random points
     np.random.seed(seed.value)
     points = np.random.rand(num_points.value, 2)
 
     # Create figure
-    fig, ax = plt.subplots(figsize=(10, 10), facecolor="black")
+    fig, ax = plt.subplots(figsize=(8, 8), facecolor="black")
 
     # Get colormap
     cmap = plt.get_cmap(colormap.value)
@@ -165,8 +110,27 @@ def _(Delaunay, Voronoi, colormap, display_mode, np, num_points, plt, seed, show
         color="white", fontsize=12, pad=10
     )
     plt.tight_layout()
-    fig
-    return cmap, colors, edge_color, fig, i, points, polygon, region, tri, vor
+
+    controls = mo.vstack([
+        mo.md("### Controls"),
+        num_points, seed, display_mode, colormap, show_points,
+        mo.md("---"),
+        mo.md("""
+**Try these:**
+- Voronoi mode: See cell territories
+- Delaunay mode: See triangulation
+- Both mode: View the duality
+- More points = finer partitions
+        """)
+    ], gap=1)
+
+    visualization = mo.vstack([
+        mo.md("### Visualization"),
+        fig
+    ])
+
+    mo.hstack([controls, visualization], widths=[1, 2], gap=2)
+    return
 
 
 @app.cell

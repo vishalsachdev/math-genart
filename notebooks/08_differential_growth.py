@@ -1,7 +1,7 @@
 import marimo
 
 __generated_with = "0.13.4"
-app = marimo.App(width="medium", app_title="Differential Growth - Biological Simulation")
+app = marimo.App(width="full", app_title="Differential Growth - Biological Simulation")
 
 
 @app.cell
@@ -23,22 +23,10 @@ def _(mo):
     mo.md(
         """
         # 8. Differential Growth - Biological Simulation
-
         [← Back to Index](index.html)
 
-        ---
-
         **Differential growth** mimics how organisms grow by pushing points apart along edges.
-        Growth is conflict resolved beautifully.
-
-        ## The Algorithm
-
-        1. Start with a closed curve (ring of points connected by edges)
-        2. **Repulsion**: Points push away from nearby non-neighbor points
-        3. **Attraction**: Connected points pull toward each other
-        4. **Splitting**: Edges that get too long split in half
-
-        This creates **veins, mycelium networks, coral, and alien biology**!
+        Points repel non-neighbors, attract neighbors, and split when edges get too long.
         """
     )
     return
@@ -46,57 +34,20 @@ def _(mo):
 
 @app.cell
 def _(mo):
-    mo.md("## Parameters")
-    return
-
-
-@app.cell
-def _(mo):
     initial_points = mo.ui.slider(20, 150, value=50, label="Initial Points", full_width=True)
-    initial_points
-    return (initial_points,)
-
-
-@app.cell
-def _(mo):
     growth_steps = mo.ui.slider(50, 800, value=300, step=25, label="Growth Steps", full_width=True)
-    growth_steps
-    return (growth_steps,)
-
-
-@app.cell
-def _(mo):
     seed = mo.ui.slider(1, 100, value=42, label="Random Seed", full_width=True)
-    seed
-    return (seed,)
-
-
-@app.cell
-def _(mo):
     repulsion_strength = mo.ui.slider(0.01, 0.05, value=0.02, step=0.005, label="Repulsion Strength", full_width=True)
-    repulsion_strength
-    return (repulsion_strength,)
-
-
-@app.cell
-def _(mo):
     line_color = mo.ui.dropdown(
         options=["lime", "cyan", "white", "yellow", "magenta", "orange"],
         value="lime",
         label="Line Color"
     )
-    line_color
-    return (line_color,)
+    return initial_points, growth_steps, seed, repulsion_strength, line_color
 
 
 @app.cell
-def _(mo):
-    mo.md("---\n## Visualization")
-    return
-
-
-@app.cell
-def _(growth_steps, initial_points, line_color, np, plt, repulsion_strength, seed):
+def _(mo, initial_points, growth_steps, seed, repulsion_strength, line_color, np, plt):
     def differential_growth(num_points, steps, random_seed, repulsion):
         """
         Simulate differential growth.
@@ -183,7 +134,7 @@ def _(growth_steps, initial_points, line_color, np, plt, repulsion_strength, see
     )
 
     # Visualization
-    fig, ax = plt.subplots(figsize=(10, 10), facecolor="black")
+    fig, ax = plt.subplots(figsize=(8, 8), facecolor="black")
 
     # Draw edges
     for i, j in final_edges:
@@ -208,65 +159,25 @@ def _(growth_steps, initial_points, line_color, np, plt, repulsion_strength, see
         color="white", fontsize=12, pad=10
     )
     plt.tight_layout()
-    fig
-    return differential_growth, fig, final_edges, final_points
 
+    controls = mo.vstack([
+        mo.md("### Controls"),
+        initial_points, growth_steps, seed, repulsion_strength, line_color,
+        mo.md("---"),
+        mo.md("""
+**Try these:**
+- High repulsion (0.05): Aggressive branching
+- More steps (600+): Finer detail
+- Fewer initial points: Simpler base shape
+        """)
+    ], gap=1)
 
-@app.cell
-def _(mo):
-    mo.md(
-        """
-        ---
+    visualization = mo.vstack([
+        mo.md("### Visualization"),
+        fig
+    ])
 
-        ## The Growth Process
-
-        1. **Initial state**: Simple closed curve (circle)
-        2. **Forces applied**:
-           - Neighbors attract (maintains connectivity)
-           - Non-neighbors repel (creates space)
-        3. **Edge splitting**: Long edges spawn new points
-        4. **Result**: Complex, organic branching structure
-
-        ---
-
-        ## Natural Analogues
-
-        This process models:
-        - **Leaf veins** - constrained growth in 2D
-        - **Blood vessels** - vascular networks
-        - **Mycelium** - fungal growth networks
-        - **Coral** - branching marine organisms
-        - **Cracked mud** - stress-driven growth
-        - **Lightning** - Lichtenberg figures
-
-        ---
-
-        ## Parameters Explained
-
-        | Parameter | Effect |
-        |-----------|--------|
-        | **Initial Points** | Complexity of starting shape |
-        | **Growth Steps** | How much the curve evolves |
-        | **Repulsion Strength** | How aggressively points separate |
-        | **Random Seed** | Reproducible variations |
-
-        Higher repulsion → more aggressive branching
-        More steps → finer detail and more splitting
-
-        ---
-
-        ## Variations
-
-        - **Multiple seeds**: Start with several curves that interact
-        - **Attractors**: Points that curves grow toward
-        - **Obstacles**: Regions that block growth
-        - **3D extension**: Differential growth in space
-
-        ---
-
-        [← Fourier](07_fourier.html) | [Back to Index](index.html) | [Prime Geometry →](09_prime_geometry.html)
-        """
-    )
+    mo.hstack([controls, visualization], widths=[1, 2], gap=2)
     return
 
 

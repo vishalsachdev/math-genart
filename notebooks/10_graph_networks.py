@@ -1,7 +1,7 @@
 import marimo
 
 __generated_with = "0.13.4"
-app = marimo.App(width="medium", app_title="Graph Networks - Topology Art")
+app = marimo.App(width="full", app_title="Graph Networks - Topology Art")
 
 
 @app.cell
@@ -23,28 +23,10 @@ def _(mo):
     mo.md(
         """
         # 10. Graph Theory & Network Flow
-
         [← Back to Index](index.html)
-
-        ---
 
         **Connections matter more than positions.** Neural maps, knowledge graphs,
         and social network abstractions emerge from relationship patterns.
-
-        ## Graph Basics
-
-        - **Node (vertex)**: An entity in the network
-        - **Edge (link)**: Connection between two nodes
-        - **Degree**: Number of edges connected to a node
-        - **Random graph**: Edges added with probability p (Erdős–Rényi model)
-
-        ## Applications
-
-        - Social networks (friendships, follows)
-        - Neural networks (neurons, synapses)
-        - The internet (servers, links)
-        - Citation networks (papers, references)
-        - Molecular structures (atoms, bonds)
         """
     )
     return
@@ -52,61 +34,24 @@ def _(mo):
 
 @app.cell
 def _(mo):
-    mo.md("## Parameters")
-    return
-
-
-@app.cell
-def _(mo):
     num_nodes = mo.ui.slider(10, 150, value=60, label="Number of Nodes", full_width=True)
-    num_nodes
-    return (num_nodes,)
-
-
-@app.cell
-def _(mo):
     edge_prob = mo.ui.slider(0.02, 0.25, value=0.08, step=0.01, label="Edge Probability", full_width=True)
-    edge_prob
-    return (edge_prob,)
-
-
-@app.cell
-def _(mo):
     seed = mo.ui.slider(1, 100, value=42, label="Random Seed", full_width=True)
-    seed
-    return (seed,)
-
-
-@app.cell
-def _(mo):
     colormap = mo.ui.dropdown(
         options=["plasma", "viridis", "magma", "inferno", "coolwarm", "YlOrRd"],
         value="plasma",
         label="Node Colormap"
     )
-    colormap
-    return (colormap,)
-
-
-@app.cell
-def _(mo):
     layout = mo.ui.dropdown(
         options=["Random", "Circular", "Force-directed"],
         value="Force-directed",
         label="Layout"
     )
-    layout
-    return (layout,)
+    return num_nodes, edge_prob, seed, colormap, layout
 
 
 @app.cell
-def _(mo):
-    mo.md("---\n## Visualization")
-    return
-
-
-@app.cell
-def _(colormap, edge_prob, layout, np, num_nodes, plt, seed):
+def _(mo, num_nodes, edge_prob, seed, colormap, layout, np, plt):
     def generate_random_graph(n, p, random_seed):
         """
         Generate Erdős–Rényi random graph G(n, p).
@@ -203,7 +148,7 @@ def _(colormap, edge_prob, layout, np, num_nodes, plt, seed):
         pos = force_directed_layout(n, edges, seed.value)
 
     # Visualization
-    fig, ax = plt.subplots(figsize=(10, 10), facecolor="black")
+    fig, ax = plt.subplots(figsize=(8, 8), facecolor="black")
 
     # Draw edges
     for i, j in edges:
@@ -233,73 +178,26 @@ def _(colormap, edge_prob, layout, np, num_nodes, plt, seed):
         color="white", fontsize=12, pad=10
     )
     plt.tight_layout()
-    fig
-    return (
-        avg_degree,
-        circular_layout,
-        degree,
-        edges,
-        fig,
-        force_directed_layout,
-        generate_random_graph,
-        n,
-        pos,
-        random_layout,
-        scatter,
-        sizes,
-    )
 
+    controls = mo.vstack([
+        mo.md("### Controls"),
+        num_nodes, edge_prob, seed, colormap, layout,
+        mo.md("---"),
+        mo.md("""
+**Try these:**
+- Force-directed + 60 nodes: Organic clusters
+- Circular + high edge prob: Dense webs
+- Random layout: Baseline comparison
+- Low edge prob (0.02): Sparse, disconnected
+        """)
+    ], gap=1)
 
-@app.cell
-def _(mo):
-    mo.md(
-        """
-        ---
+    visualization = mo.vstack([
+        mo.md("### Visualization"),
+        fig
+    ])
 
-        ## Network Properties
-
-        | Property | Description |
-        |----------|-------------|
-        | **Degree distribution** | How degrees are distributed across nodes |
-        | **Clustering coefficient** | How triangles form (friends of friends) |
-        | **Path length** | Average shortest path between nodes |
-        | **Diameter** | Longest shortest path |
-
-        ---
-
-        ## Famous Networks
-
-        - **Six degrees of separation**: Average path length ~6 in social networks
-        - **Small world networks**: High clustering + short paths
-        - **Scale-free networks**: Power-law degree distribution (few hubs, many leaves)
-        - **Barabási-Albert**: Preferential attachment model
-
-        ---
-
-        ## Erdős–Rényi Model
-
-        The simplest random graph model G(n, p):
-        - n nodes
-        - Each possible edge exists with probability p
-        - Expected edges: n(n-1)p/2
-        - Expected degree: (n-1)p
-
-        **Phase transition**: At p = 1/n, a giant connected component emerges!
-
-        ---
-
-        ## Layout Algorithms
-
-        - **Random**: No structure, useful baseline
-        - **Circular**: Nodes on a circle, good for small graphs
-        - **Force-directed**: Physics simulation where edges are springs
-          and nodes repel like charged particles
-
-        ---
-
-        [← Prime Geometry](09_prime_geometry.html) | [Back to Index](index.html) | [Phase Portraits →](11_phase_portraits.html)
-        """
-    )
+    mo.hstack([controls, visualization], widths=[1, 2], gap=2)
     return
 
 

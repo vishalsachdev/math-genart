@@ -1,7 +1,7 @@
 import marimo
 
 __generated_with = "0.13.4"
-app = marimo.App(width="medium", app_title="Dynamical Systems - Route to Chaos")
+app = marimo.App(width="full", app_title="Dynamical Systems - Route to Chaos")
 
 
 @app.cell
@@ -23,38 +23,12 @@ def _(mo):
     mo.md(
         """
         # 12. Dynamical Systems - Iterated Maps
-
         [← Back to Index](index.html)
 
-        ---
-
-        **Iterated maps** show the route to chaos through bifurcations.
-        Tiny parameter changes create radically different futures.
-
-        ## The Logistic Map
-
-        The simplest chaotic system:
-
-        ### x_{n+1} = r · x_n · (1 - x_n)
-
-        Where:
-        - **x**: Population (0 to 1)
-        - **r**: Growth rate parameter (0 to 4)
-        - **n**: Time step
-
-        This simple equation exhibits:
-        - Fixed points
-        - Period doubling
-        - Chaos
-        - Windows of order within chaos
+        **Iterated maps** show the route to chaos through bifurcations. The logistic map
+        x_{n+1} = r * x_n * (1 - x_n) exhibits fixed points, period doubling, and chaos.
         """
     )
-    return
-
-
-@app.cell
-def _(mo):
-    mo.md("## Parameters")
     return
 
 
@@ -65,43 +39,18 @@ def _(mo):
         value="Logistic Bifurcation",
         label="System Type"
     )
-    system_type
-    return (system_type,)
-
-
-@app.cell
-def _(mo):
     resolution = mo.ui.slider(500, 2000, value=1000, step=100, label="Resolution", full_width=True)
-    resolution
-    return (resolution,)
-
-
-@app.cell
-def _(mo):
     iterations = mo.ui.slider(100, 500, value=200, label="Iterations per r-value", full_width=True)
-    iterations
-    return (iterations,)
-
-
-@app.cell
-def _(mo):
     colormap = mo.ui.dropdown(
         options=["cyan", "hot", "plasma", "viridis", "white"],
         value="cyan",
         label="Point Color"
     )
-    colormap
-    return (colormap,)
+    return system_type, resolution, iterations, colormap
 
 
 @app.cell
-def _(mo):
-    mo.md("---\n## Visualization")
-    return
-
-
-@app.cell
-def _(colormap, iterations, np, plt, resolution, system_type):
+def _(mo, system_type, resolution, iterations, colormap, np, plt):
     def logistic_bifurcation(res, iters):
         """
         Compute logistic map bifurcation diagram.
@@ -170,7 +119,7 @@ def _(colormap, iterations, np, plt, resolution, system_type):
         return np.array(mu_all), np.array(x_all)
 
     # Generate data based on system type
-    fig, ax = plt.subplots(figsize=(12, 8), facecolor="black")
+    fig, ax = plt.subplots(figsize=(8, 8), facecolor="black")
 
     if system_type.value == "Logistic Bifurcation":
         r_vals, x_vals = logistic_bifurcation(resolution.value, iterations.value)
@@ -205,81 +154,27 @@ def _(colormap, iterations, np, plt, resolution, system_type):
     ax.set_facecolor("black")
     ax.set_title(system_type.value, color="white", fontsize=14, pad=10)
     plt.tight_layout()
-    fig
-    return (
-        fig,
-        henon_attractor,
-        henon_pts,
-        logistic_bifurcation,
-        mu_vals,
-        r_vals,
-        tent_map_bifurcation,
-        x_vals,
-    )
 
+    controls = mo.vstack([
+        mo.md("### Controls"),
+        system_type, resolution, iterations, colormap,
+        mo.md("---"),
+        mo.md("""
+**Logistic map behavior by r:**
+- r < 3: Stable fixed point
+- 3 < r < 3.57: Period doubling
+- r > 3.57: Chaos with order windows
 
-@app.cell
-def _(mo):
-    mo.md(
-        """
-        ---
+**Try:** Henon Attractor for 2D chaos
+        """)
+    ], gap=1)
 
-        ## Reading the Bifurcation Diagram
+    visualization = mo.vstack([
+        mo.md("### Visualization"),
+        fig
+    ])
 
-        **Logistic map behavior by r:**
-
-        | r range | Behavior |
-        |---------|----------|
-        | 0 - 1 | Extinction (x → 0) |
-        | 1 - 3 | Single stable fixed point |
-        | 3 - 3.45 | Period-2 oscillation |
-        | 3.45 - 3.54 | Period-4 oscillation |
-        | 3.54 - 3.57 | Period-8, 16, 32... (period doubling) |
-        | 3.57+ | Chaos (with windows of order) |
-
-        ---
-
-        ## The Feigenbaum Constants
-
-        The period-doubling cascade has universal properties:
-
-        - **δ ≈ 4.669...**: Ratio of widths between bifurcations
-        - **α ≈ 2.502...**: Ratio of widths of tines
-
-        These constants appear in **all** period-doubling routes to chaos,
-        not just the logistic map! This is deep mathematical universality.
-
-        ---
-
-        ## Other Systems
-
-        **Henon Attractor:**
-        - 2D chaotic map
-        - Fractal structure (Cantor-like)
-        - Positive Lyapunov exponent
-
-        **Tent Map:**
-        - Simpler than logistic (piecewise linear)
-        - Exactly solvable in some cases
-        - Same bifurcation structure
-
-        ---
-
-        ## Chaos vs Randomness
-
-        Chaotic systems are:
-        - **Deterministic**: Same initial conditions → same outcome
-        - **Sensitive**: Tiny changes → completely different outcomes
-        - **Bounded**: Stay within a finite region
-        - **Aperiodic**: Never exactly repeat
-
-        This is **deterministic chaos** - unpredictable but not random!
-
-        ---
-
-        [← Phase Portraits](11_phase_portraits.html) | [Back to Index](index.html)
-        """
-    )
+    mo.hstack([controls, visualization], widths=[1, 2], gap=2)
     return
 
 

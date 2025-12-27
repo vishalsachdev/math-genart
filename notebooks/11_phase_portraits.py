@@ -1,7 +1,7 @@
 import marimo
 
 __generated_with = "0.13.4"
-app = marimo.App(width="medium", app_title="Phase Portraits - Complex Domain Coloring")
+app = marimo.App(width="full", app_title="Phase Portraits - Complex Domain Coloring")
 
 
 @app.cell
@@ -24,33 +24,12 @@ def _(mo):
     mo.md(
         """
         # 11. Complex Numbers & Phase Portraits
-
         [← Back to Index](index.html)
 
-        ---
-
-        **Domain coloring** visualizes complex functions by mapping:
-        - **Phase (angle)** → Hue
-        - **Magnitude** → Brightness
-
-        This creates flowing, color-rich mathematical impressionism that reveals
-        the structure of complex functions.
-
-        ## Complex Functions
-
-        A complex function f: ℂ → ℂ takes a complex number z = x + iy
-        and returns another complex number w = f(z).
-
-        Unlike real functions, we can't simply plot y vs x. Instead, we color
-        each input point based on the output!
+        **Domain coloring** visualizes complex functions by mapping phase to hue and magnitude to brightness.
+        This reveals zeros, poles, and singularities as flowing color patterns.
         """
     )
-    return
-
-
-@app.cell
-def _(mo):
-    mo.md("## Parameters")
     return
 
 
@@ -72,43 +51,18 @@ def _(mo):
         value="z² - 1 (two zeros)",
         label="Function f(z)"
     )
-    func_choice
-    return (func_choice,)
-
-
-@app.cell
-def _(mo):
     resolution = mo.ui.slider(200, 800, value=500, step=50, label="Resolution", full_width=True)
-    resolution
-    return (resolution,)
-
-
-@app.cell
-def _(mo):
     view_range = mo.ui.slider(1.0, 5.0, value=2.5, step=0.5, label="View Range", full_width=True)
-    view_range
-    return (view_range,)
-
-
-@app.cell
-def _(mo):
     brightness_mode = mo.ui.dropdown(
         options=["Magnitude", "Constant", "Log magnitude"],
         value="Magnitude",
         label="Brightness Mode"
     )
-    brightness_mode
-    return (brightness_mode,)
+    return func_choice, resolution, view_range, brightness_mode
 
 
 @app.cell
-def _(mo):
-    mo.md("---\n## Visualization")
-    return
-
-
-@app.cell
-def _(brightness_mode, func_choice, hsv_to_rgb, np, plt, resolution, view_range):
+def _(mo, func_choice, resolution, view_range, brightness_mode, hsv_to_rgb, np, plt):
     def domain_coloring(func_str, res, vrange, brightness):
         """
         Create domain coloring visualization of a complex function.
@@ -173,7 +127,7 @@ def _(brightness_mode, func_choice, hsv_to_rgb, np, plt, resolution, view_range)
     )
 
     # Visualization
-    fig, ax = plt.subplots(figsize=(10, 10), facecolor="black")
+    fig, ax = plt.subplots(figsize=(8, 8), facecolor="black")
     extent = [-view_range.value, view_range.value, -view_range.value, view_range.value]
     ax.imshow(rgb_img, extent=extent, origin="lower")
     ax.axhline(0, color="white", linewidth=0.5, alpha=0.3)
@@ -187,68 +141,30 @@ def _(brightness_mode, func_choice, hsv_to_rgb, np, plt, resolution, view_range)
         color="white", fontsize=12, pad=10
     )
     plt.tight_layout()
-    fig
-    return display_name, domain_coloring, extent, fig, func_str, rgb_img
 
+    controls = mo.vstack([
+        mo.md("### Controls"),
+        func_choice, resolution, view_range, brightness_mode,
+        mo.md("---"),
+        mo.md("""
+**Color wheel:**
+- Red: Positive real (phase = 0)
+- Cyan: Negative real (phase = π)
+- Yellow-green: Positive imaginary
 
-@app.cell
-def _(mo):
-    mo.md(
-        """
-        ---
+**Features:**
+- Zeros: All colors meet at a point
+- Poles: Brightness changes rapidly
+- Try Log magnitude for contours
+        """)
+    ], gap=1)
 
-        ## Reading Phase Portraits
+    visualization = mo.vstack([
+        mo.md("### Visualization"),
+        fig
+    ])
 
-        **Color wheel interpretation:**
-        - **Red**: Positive real (phase = 0)
-        - **Cyan**: Negative real (phase = π)
-        - **Yellow-green**: Positive imaginary (phase = π/2)
-        - **Purple**: Negative imaginary (phase = -π/2)
-
-        **Key features:**
-        - **Zeros**: All colors meet at a point (phase wraps around)
-        - **Poles**: Similar to zeros but brightness changes differently
-        - **Essential singularities**: Wild, chaotic color patterns
-
-        ---
-
-        ## Important Functions
-
-        | Function | Features |
-        |----------|----------|
-        | z² - 1 | Two zeros at ±1 |
-        | z³ - 1 | Three zeros (cube roots of unity) |
-        | 1/z | Simple pole at origin |
-        | sin(z) | Zeros at nπ, essential singularity at ∞ |
-        | exp(z) | No zeros! Essential singularity at ∞ |
-        | tan(z) | Poles where cos(z) = 0 |
-
-        ---
-
-        ## The Mathematics
-
-        Every complex function can be understood through:
-        - **Zeros**: Where f(z) = 0
-        - **Poles**: Where f(z) → ∞
-        - **Branch cuts**: Where the function isn't continuous
-        - **Essential singularities**: Wild behavior (Picard's theorem)
-
-        **Cauchy's Argument Principle**: The number of zeros minus poles inside
-        a curve equals how many times the colors cycle around it!
-
-        ---
-
-        ## Brightness Modes
-
-        - **Magnitude**: Brighter = larger output
-        - **Constant**: Shows phase only
-        - **Log magnitude**: Contour lines visible, good for seeing structure
-
-        ---
-
-        [← Graph Networks](10_graph_networks.html) | [Back to Index](index.html) | [Dynamical Systems →](12_dynamical_systems.html)
-        """
-    )
+    mo.hstack([controls, visualization], widths=[1, 2], gap=2)
     return
 
 

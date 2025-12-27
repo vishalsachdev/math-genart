@@ -1,7 +1,7 @@
 import marimo
 
 __generated_with = "0.13.4"
-app = marimo.App(width="medium", app_title="Prime Geometry - Arithmetic Aesthetics")
+app = marimo.App(width="full", app_title="Prime Geometry - Arithmetic Aesthetics")
 
 
 @app.cell
@@ -23,35 +23,10 @@ def _(mo):
     mo.md(
         """
         # 9. Prime Number Geometry - Arithmetic Aesthetics
-
         [← Back to Index](index.html)
 
-        ---
-
-        Pure arithmetic yields unexpected symmetry. **Ulam spirals** reveal hidden
-        patterns in prime numbers that mathematicians still don't fully understand.
-
-        ## The Ulam Spiral
-
-        Discovered by Stanislaw Ulam in 1963 while doodling during a boring meeting:
-
-        1. Write integers in a spiral pattern starting from 1
-        2. Circle all the prime numbers
-        3. Notice the diagonal patterns!
-
-        ```
-        17-16-15-14-13
-        |            |
-        18  5- 4- 3 12
-        |   |     |  |
-        19  6  1- 2 11
-        |   |        |
-        20  7- 8- 9-10
-        |
-        21-22-23-24-25-...
-        ```
-
-        Primes tend to cluster on certain diagonals!
+        **Ulam Spiral**: Discovered in 1963, primes plotted on an integer spiral reveal mysterious diagonal patterns.
+        These correspond to quadratic polynomials like n² + n + 41 (Euler's prime-generator).
         """
     )
     return
@@ -59,43 +34,18 @@ def _(mo):
 
 @app.cell
 def _(mo):
-    mo.md("## Parameters")
-    return
-
-
-@app.cell
-def _(mo):
     max_number = mo.ui.slider(1000, 100000, value=20000, step=1000, label="Maximum Number", full_width=True)
-    max_number
-    return (max_number,)
-
-
-@app.cell
-def _(mo):
     point_size = mo.ui.slider(0.1, 5.0, value=1.0, step=0.1, label="Point Size", full_width=True)
-    point_size
-    return (point_size,)
-
-
-@app.cell
-def _(mo):
     point_color = mo.ui.dropdown(
         options=["cyan", "lime", "yellow", "magenta", "white", "orange"],
         value="cyan",
         label="Point Color"
     )
-    point_color
-    return (point_color,)
+    return max_number, point_size, point_color
 
 
 @app.cell
-def _(mo):
-    mo.md("---\n## Visualization")
-    return
-
-
-@app.cell
-def _(max_number, np, plt, point_color, point_size):
+def _(max_number, mo, np, plt, point_color, point_size):
     def sieve_of_eratosthenes(n):
         """
         Efficient prime number generation using Sieve of Eratosthenes.
@@ -150,7 +100,7 @@ def _(max_number, np, plt, point_color, point_size):
     prime_coords = [coords[p] for p in primes if p in coords]
 
     # Visualization
-    fig, ax = plt.subplots(figsize=(10, 10), facecolor="black")
+    fig, ax = plt.subplots(figsize=(8, 8), facecolor="black")
 
     if prime_coords:
         px, py = zip(*prime_coords)
@@ -163,70 +113,26 @@ def _(max_number, np, plt, point_color, point_size):
         color="white", fontsize=12, pad=10
     )
     plt.tight_layout()
-    fig
-    return (
-        coords,
-        fig,
-        prime_coords,
-        primes,
-        px,
-        py,
-        sieve_of_eratosthenes,
-        ulam_spiral_coordinates,
-    )
 
+    controls = mo.vstack([
+        mo.md("### Controls"),
+        max_number, point_size, point_color,
+        mo.md("---"),
+        mo.md("""
+**Try these:**
+- 20,000 max: See the basic diagonals
+- 100,000 max: Rich diagonal structure
+- Small point size (0.5): More detail
+- Increase point size for dense look
+        """)
+    ], gap=1)
 
-@app.cell
-def _(mo):
-    mo.md(
-        """
-        ---
+    visualization = mo.vstack([
+        mo.md("### Visualization"),
+        fig
+    ])
 
-        ## Why Diagonals?
-
-        The diagonal lines correspond to **quadratic polynomials**. For example:
-
-        - **Main diagonal**: n² + n + 41 (Euler's prime-generating polynomial)
-        - Generates primes for n = 0 to 39!
-
-        Many quadratic polynomials happen to generate unusually many primes,
-        and these show up as diagonal clusters in the Ulam spiral.
-
-        ---
-
-        ## Mathematical Mystery
-
-        The diagonal patterns are:
-        - **Real**: Statistically significant clustering
-        - **Unexplained**: No complete theory explains why
-        - **Connected**: To deep questions about prime distribution
-
-        The Riemann Hypothesis (one of the greatest unsolved problems) relates
-        to how primes are distributed among integers.
-
-        ---
-
-        ## Other Prime Visualizations
-
-        - **Sacks Spiral**: Primes on Archimedean spiral (squares at integers)
-        - **Klauber Triangle**: Triangular arrangement
-        - **Prime Factorization Diagrams**: Color by factors
-        - **Modular Patterns**: Primes mod n create patterns
-
-        ---
-
-        ## Prime Facts
-
-        - There are infinitely many primes (Euclid, 300 BCE)
-        - Prime gaps can be arbitrarily large
-        - Twin primes (p, p+2) may be infinite (unproven!)
-        - The largest known prime has 24+ million digits
-
-        ---
-
-        [← Differential Growth](08_differential_growth.html) | [Back to Index](index.html) | [Graph Networks →](10_graph_networks.html)
-        """
-    )
+    mo.hstack([controls, visualization], widths=[1, 2], gap=2)
     return
 
 
