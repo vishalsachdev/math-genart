@@ -12,7 +12,7 @@ def _():
 
 @app.cell
 def _(mo):
-    _title = mo.md(
+    mo.md(
         """
         # Mathematical Generative Art Systems
 
@@ -24,15 +24,7 @@ def _(mo):
         Based on the comprehensive guide by Willy (2025).
 
         ---
-        """
-    )
-    return (_title,)
 
-
-@app.cell
-def _(mo):
-    _content = mo.md(
-        """
         ### [1. Cellular Automata](01_cellular_automata.html)
         **Rule-Based Emergence** - Conway's Game of Life
 
@@ -81,7 +73,7 @@ def _(mo):
         Built with [Marimo](https://marimo.io) and exported to WebAssembly for browser-only execution.
         """
     )
-    return (_content,)
+    return
 
 
 if __name__ == "__main__":
