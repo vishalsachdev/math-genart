@@ -21,7 +21,7 @@ def _(mo):
         Each system demonstrates how simple rules create complex, beautiful patterns.
         Click on any system below to explore it interactively.
 
-        Based on the comprehensive guide by Willy (2025).
+        Based on the comprehensive guide by [Wilfred Kamau](https://www.linkedin.com/posts/wilfred-kamau-001134267_mathematical-system-for-generative-ai-activity-7409583130673696768-hqoB).
 
         ---
 
